@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="post">
+            <div class="m-5 p-4 border border-2 rounded">
+                <h4 class="d-flex justify-content-center">"{{post.title}}"</h4>
+                <hr>
+                <p><big><i>{{post.content}}</i></big></p>
+                <div>
+                    <small class="d-flex justify-content-end">(posted by: @{{post.author}} on {{post.date_created|date:"F d, Y"}})</small>
+                </div>
+                {% if post.author == request.user %}
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-info" href="{% url 'post_update' post.id %}" role="button">Update</a>
+                        <a class="btn btn-danger" href="{% url 'post_delete' post.id %}" role="button">Delete</a>
+                    </div>
+                {% endif %}
+                <hr>
+                {% if request.user.is_authenticated %}
+                    <div class="input-comment">
+                        <div class="input-group mb-3">
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="input-group m-2">
+                                    {{form}}
+                                    <button class="btn btn-outline-success" type="submit">Comment</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            
+        </div>
+
+        
+
+        <div class="comments">
+            <div class="comment-group m-5 p-4 border border-2 rounded">
+                <h4>Comments</h4>
+                <hr>
+                {% for comment in comments %}
+                    <div class="">
+                        <h5>@{{comment.user}}: <i>{{comment.content}}</i></h5> <small>posted {{comment.date_written|timesince}}</small>
+                    </div>
+                    <hr>
+                {% empty %}
+                    <div class="">
+                        <small>No comments yet!</small>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        
+    </div>
+
+
+{% endblock content %}

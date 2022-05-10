@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    a:link {
+        text-decoration: none;
+      }
+</style>
+
+
+    <div class="container">
+        
+        <div class="border border-3 border-dark">
+            <a class="p-3 m-2 btn btn-primary d-flex justify-content-center" role="button" href="{% url 'chat_create' %}">NEW CHAT</a>
+            {% for chat in chats %}
+                <div class="m-2 p-2 border border-2 rounded">
+                    {% if chat.chat_sender == request.user %}
+                        <a href="{% url 'chat_detail' chat.id %}"><h5>{{ chat.chat_receiver.username }}</h5></a><br>
+                    {% elif chat.chat_receiver == request.user %}
+                        <a href="{% url 'chat_detail' chat.id %}"><h5>{{ chat.chat_sender.username }}</h5></a><br>
+                    {% endif %}
+                </div>
+            {% empty %}
+            </div>
+                <div class="m-5 p-4 border border-2 rounded">
+                    <small>No message yet!</small>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock content %}

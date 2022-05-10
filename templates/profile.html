@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="m-2 feed-container border border-dark border-2 rounded">
+    <div>
+        <h3 class="d-flex justify-content-evenly p-3 m-1">@{{ username }}'s Posts (total: {{posts.count}})</h3>
+    </div>
+    <hr>
+    
+    {% for post in posts %}
+        <div>
+            <div>
+                <h4 class="p-3 d-flex justify-content-center"><a href="{% url 'post_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a></h4>
+                <p class="p-3 d-flex justify-content-center">{{ post.content }}</p>
+            </div>
+            <small class="p-2 d-flex justify-content-end">(posted on {{post.date_created|date:"F d, Y"}})</small>
+        </div>
+        <hr>
+    {% endfor%}
+</div>
+
+{% endblock content %}

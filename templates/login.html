@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{message}}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div>
+    <form method="POST"> 
+         
+        {% csrf_token %}
+        <div class="input-group d-flex justify-content-center">
+            <div class="p-5 border rounded border-dark">
+                <legend class="d-flex justify-content-center">LOGIN</legend> 
+                <hr>
+                <input class="input-group p-1 m-2" type="text" name="u" placeholder="Username...">
+                <input class="input-group p-1 m-2" type="password" name="p" placeholder="Password...">
+                <div class="d-flex justify-content-center">
+                    <button class='btn btn-outline-success' type="submit">confirm</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

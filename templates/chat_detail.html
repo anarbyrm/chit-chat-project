@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="post">
+        <div class="m-5 p-4 border border-2 rounded">
+            {% if chat.chat_sender == request.user %}
+                <h4>Chatting with @{{chat.chat_receiver.username }}</h4>
+            {% elif chat.chat_receiver == request.user %}
+                <h4>Chatting with @{{chat.chat_sender.username }}</h4>
+            {% endif %}
+            <hr>
+
+            {% for message in msgs %}
+                <div>
+                    <h5>@{{ message.message_sender}} : "{{ message.body}}"</h5>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="form">
+            <div class="m-5 p-4 border border-2 rounded">
+                <form method="POST">
+                    {% csrf_token %}
+                    <label>message:</label>
+                    <input type="text" name="body">
+                    <button class="btn btn-outline-success" type="submit">SEND</button>
+                </form>
+            </div>    
+        </div>
+    </div>
+</div>
+{% endblock content %}

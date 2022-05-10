@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .feed-container {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+    }
+</style>
+
+    
+<div class="m-2 feed-container">
+
+    <div class="m-2 border rounded border-dark">
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{message}}
+            </div>
+        {% endfor %}
+        {% endif %}
+        
+        <div>
+            {% if posts_ %}
+                <h3 class="d-flex justify-content-evenly p-3 m-1">Posts (total: {{posts_.count}})</h3>
+            {% else %}
+                <h3 class="d-flex justify-content-evenly p-3 m-1">Posts</h3>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <div class="d-flex justify-content-evenly">
+                    <a href="{% url 'post_create' %}" class='btn btn-outline-success' role="button">+ NEW POST</a>
+                </div>
+            {% endif %}
+         </div>
+        <hr>
+        
+        {% for post in posts_ %}
+            <div>
+                <div>
+                    <h4 class="p-3 d-flex justify-content-center"><a href="{% url 'post_detail' post.id %}" class="text-decoration-none">{{ post.title }}</a></h4>
+                    <p class="p-3 d-flex justify-content-center">{{ post.content }}</p>
+                </div>
+                <small class="p-2 d-flex justify-content-end">(posted by: @{{post.author}} on {{post.date_created|date:"F d, Y"}})</small>
+            </div>
+            <hr>
+        {% endfor%}
+    </div>
+
+    <div class="m-2 border border-1 rounded border-dark">
+        <div >
+            <h6 class="m-1 p-1 d-flex justify-content-center">RECENT COMMENTS</h6>
+            <small class="d-flex justify-content-center">(total: {{comments.count}})</small>
+            <hr>
+            {% for comment in comments %}
+                <div>
+                    <h6 class="m-1 p-3 d-flex justify-content-center">@{{ comment.user }}: "{{comment.content}}"</h6><small class="p-2 d-flex justify-content-end">{{comment.date_written|timesince}}</small>
+                    <hr>
+                </div>
+            {% empty %}
+                <small class="m-1 p-3 d-flex justify-content-center">No comments yet!</small>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}

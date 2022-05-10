@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="d-flex justify-content-center">
+    <div class="p-5 border rounded border-dark">
+        
+        <form method="POST"> 
+            <h3>CONTACT US!</h3>
+            <hr>  
+            {% csrf_token %}
+
+            <div>
+                {{ form.as_p }}
+            </div>
+
+        </form>
+    </div>
+</div
+
+{% endblock content %}
+

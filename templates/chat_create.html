@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="form">
+        <div class="m-5 p-4 border border-2 rounded">
+            <form method="POST">
+                {% csrf_token %}
+                <label>username:</label>
+                <input type="text" name="user">
+                <button class="btn btn-outline-success" type="submit">Chat</button>
+            </form>
+        </div>    
+    </div>
+{% endblock content %}
